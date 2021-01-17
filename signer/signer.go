@@ -11,9 +11,9 @@ import (
 
 type (
 	SignedRequest struct {
-		FileName string `json:"fileName"`
-		ContentType string  `json:"contentType"`
-		PublicRead bool `json:"public-read"`
+		Key         string `json:"fileName"`
+		ContentType string `json:"contentType"`
+		PublicRead  bool   `json:"public-read"`
 	}
 
 	GcpSigner struct {
@@ -58,7 +58,7 @@ func (gcp *GcpSigner) UploadSigned( req *SignedRequest) (string ,error) {
 		Expires:        time.Now().Add(15 * time.Minute),
 	}
 
-	return  storage.SignedURL(gcp.bucket, req.FileName, opts)
+	return  storage.SignedURL(gcp.bucket, req.Key, opts)
 }
 
 func (gcp *GcpSigner) GenerateV4GetObjectSignedURL(req *SignedRequest)  (string,error){
@@ -70,5 +70,5 @@ func (gcp *GcpSigner) GenerateV4GetObjectSignedURL(req *SignedRequest)  (string,
 		Expires:        time.Now().Add(15 * time.Minute),
 	}
 
-	return storage.SignedURL(gcp.bucket, req.FileName, opts)
+	return storage.SignedURL(gcp.bucket, req.Key, opts)
 }

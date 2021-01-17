@@ -48,7 +48,7 @@ func (s *Server) SignedUpload(e echo.Context) error{
 	newFilePath:= fmt.Sprintf("%s/%s%s", containerId, fileUuid, ext)
 
 	signedReq:= &signer.SignedRequest{
-		FileName:    newFilePath,
+		Key:         newFilePath,
 		ContentType: req.ContentType,
 		PublicRead:  req.PublicRead,
 	}
@@ -89,7 +89,7 @@ func (s *Server) SignedGet(e echo.Context) error{
 	//
 
 	signedReq:= &signer.SignedRequest{
-		FileName:  db.FileName,
+		Key: db.Key,
 	}
 	u, err:= s.signer.GenerateV4GetObjectSignedURL(signedReq)
 	if err != nil{
